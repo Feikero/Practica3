@@ -199,4 +199,4 @@ void loop() {
 ```
 - **'if (Serial.available()) { SerialBT.write(Serial.read()); }:'** Si hi ha dades disponibles en el port serial (per exemple, des de la computadora), llegeix un byte de 'Serial' y ho envía per medi de Bluetooth utilitzant 'SerialBT.write()'.
 - **'if (SerialBT.available()) { Serial.write(SerialBT.read()); }:'** Si hi ha dades disponibles en el port Bluetooth, llegeix un byte de 'SerialBT' y ho envía per medi del port serial (a la computadora) utilitzant 'Serial.write()'.
-- **'delay(20);:'** Introdueix una petita pausa de 20 milisegons per evitar sobrecargar la CPU.
+- **'delay(20);:'** Introdueix una petita pausa de 20 milisegons per evitar sobrecarregar la CPU.
