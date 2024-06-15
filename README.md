@@ -1,5 +1,6 @@
 # Practica 3
-## Codi en Línea 
+## Part A
+### Codi en Línea 
 ```cpp
 #include <WiFi.h>
 #include <WebServer.h>
@@ -45,10 +46,22 @@ server.send(200, "text/html", HTML);
 } 
 ```
 
-## Explicació del codi
+### Explicació del codi
 `1.Inclusió de llibreries`
 ```cpp
 #include <WiFi.h>
 #include <WebServer.h>
 #include <Arduino.h>
 ```
+Aquestes llibreries serveixen per poder utilitzar la conectivitat Wi-Fi, el servidor web i les funcions bàsiques d'Arduino.
+
+`2.Declaració de variables i objectes`
+```cpp
+// SSID & Password 
+const char* ssid = "Redmi_Note_11S";  // Enter your SSID here 
+const char* password = "12345678";  // Enter your Password here 
+WebServer server(80);  // Object of WebServer(HTTP port, 80 is default) 
+```
+- **'const char * ssid:'** Guarda el nom de la xarxa Wi-Fi.
+- **'const char * password:'** Guarda la contrasenya de la xarxa Wi-Fi.
+- **'WebServer server(80);:'** Crea un objecte server per controlar un servidor web al port 80 (el port HTTP predeterminat).
