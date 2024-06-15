@@ -3,8 +3,8 @@
 #include <Arduino.h>
 
 // SSID & Password 
-const char* ssid = "*****";  // Enter your SSID here 
-const char* password = "*****";  //Enter your Password here 
+const char* ssid = "Redmi_Note_11S";  // Enter your SSID here 
+const char* password = "12345678";  //Enter your Password here 
 WebServer server(80);  // Object of WebServer(HTTP port, 80 is defult) 
 void setup() { 
 Serial.begin(115200); 
