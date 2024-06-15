@@ -129,13 +129,8 @@ Aquí s'envia una resposta HTTP amb el codi d'estat 200 (OK), el tipús de conti
 ### Codi en Línea 
 ```cpp
 #include <Arduino.h>
-
-//This example code is in the Public Domain (or CC0 licensed, at your option.) 
-//By Evandro Copercini - 2018 
-// 
-//This example creates a bridge between Serial and Classical Bluetooth (SPP) 
-//and also demonstrate that SerialBT have the same functionalities of a normal Serial 
-#include "BluetoothSerial.h" 
+#include "BluetoothSerial.h"
+ 
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED) 
 #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it 
 #endif 
@@ -160,5 +155,48 @@ delay(20);
 `1.Inclusió de llibreries`
 ```cpp
 #include <Arduino.h>
+#include "BluetoothSerial.h"
 ```
-Aquí s'inclou la llibreria d'Arduino.h la qual ens permet utilitzar les funcions bàsiques del microcontrolador.
+Aquí s'inclou la llibreria de 'Arduino.h' la qual ens permet utilitzar les funcions bàsiques del microcontrolador i la de 'BluetoothSerial.h' per poder controlar funcions bluetooth.
+
+`2.Verificació de configuració Bluetooth`
+```cpp
+#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
+#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
+#endif
+```
+Aquesta secció es per verificar si Bluetooth y Bluedroid estan habilitats. En cas negatiu, es produeix un error de compilació amb el missatge indicat. Això és útil per assegurar-se de que el entorn de compilació está configurat correctament per soportar Bluetooth.
+
+`3.Declaració d'objecte Bluetooth`
+```cpp
+BluetoothSerial SerialBT;
+```
+Es crea un objecte **'SerialBT'** de classe 'BluetoothSerial' que s'haurà de fer servir per controlar la comunicació bluetooth.
+
+`4.Setup`
+```cpp
+void setup() { 
+  Serial.begin(115200); 
+  SerialBT.begin("IKer"); // Bluetooth device name 
+  Serial.println("The device started, now you can pair it with bluetooth!"); 
+}
+```
+**'Serial.begin(115200);:'** Inicia la comunicació serial a 115200 bauds.
+**'SerialBT.begin("IKer");:'** Inicia la comunicació Bluetooth amb el nom del dispositiu "IKer".
+**'Serial.println("The device started, now you can pair it with bluetooth!");:'** Mostra per pantalla un missatge en el monitor serial indicant que el dispositiu Bluetooth està llest per aparellar-se.
+
+`5.Loop`
+```cpp
+void loop() { 
+  if (Serial.available()) { 
+    SerialBT.write(Serial.read()); 
+  } 
+  if (SerialBT.available()) { 
+    Serial.write(SerialBT.read()); 
+  } 
+  delay(20); 
+}
+```
+- **'if (Serial.available()) { SerialBT.write(Serial.read()); }:'** Si hi ha dades disponibles en el port serial (per exemple, des de la computadora), llegeix un byte de 'Serial' y ho envía per medi de Bluetooth utilitzant 'SerialBT.write()'.
+- **'if (SerialBT.available()) { Serial.write(SerialBT.read()); }:'** Si hi ha dades disponibles en el port Bluetooth, llegeix un byte de 'SerialBT' y ho envía per medi del port serial (a la computadora) utilitzant 'Serial.write()'.
+- **'delay(20);:'** Introdueix una petita pausa de 20 milisegons per evitar sobrecargar la CPU.
